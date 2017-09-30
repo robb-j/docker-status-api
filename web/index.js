@@ -12,6 +12,9 @@ const util = require('./utils')
 
 ;(async () => {
   
+  // Configure winston
+  winston.add(winston.transports.File, { filename: 'logs/app.log' })
+  
   
   // Check we have a valid docker socket
   if (!fs.statSync(socketPath).isSocket()) {
@@ -27,10 +30,6 @@ const util = require('./utils')
   
   // Process the keys to pluck
   const envKeys = (process.env.ENV_KEYS && `${process.env.ENV_KEYS}`.split(',')) || []
-  
-  
-  // Configure winston
-  winston.add(winston.transports.File, { filename: 'logs/app.log' })
   
   
   // Generates json fit for an api
