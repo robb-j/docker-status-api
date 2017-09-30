@@ -11,5 +11,6 @@ COPY package.json /app
 RUN npm install --silent --production
 
 COPY web /app/web
+COPY VERSION /app/VERSION
 
 CMD node web/index.js

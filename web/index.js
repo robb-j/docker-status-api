@@ -74,6 +74,12 @@ const util = require('./utils')
   
   
   // Start the app
-  app.listen(process.env.APP_PORT || 3001)
+  winston.info(`Started on ${process.env.APP_PORT || 3000}`)
+  try {
+    app.listen(process.env.APP_PORT || 3000)
+  }
+  catch (error) {
+    winston.error(error)
+  }
   
 })()

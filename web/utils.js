@@ -18,9 +18,7 @@ module.exports.stripEnv = function(env) {
 module.exports.processPorts = function(ports) {
   return Object.keys(ports).reduce((map, key) => {
     let containerPort = key.split('/')[0]
-    map[containerPort] = (ports[key] || []).map(child => {
-      return child.HostPort
-    })
+    map[containerPort] = (ports[key] && ports[key][0] && ports[key][0].HostPort)
     return map
   }, {})
 }
