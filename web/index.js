@@ -25,6 +25,10 @@ const util = require('./utils')
   const version = (await readFile(versionPath, 'utf8')).trim()
   
   
+  // Process the keys to pluck
+  const envKeys = (process.env.ENV_KEYS && `${process.env.ENV_KEYS}`.split(',')) || []
+  
+  
   // Configure winston
   winston.add(winston.transports.File, { filename: 'logs/app.log' })
   
@@ -41,19 +45,29 @@ const util = require('./utils')
   // Create our express app
   let app = express()
   
+  // An index endpoint, detailing the api structure
   app.get('/', async (req, res) => {
-    res.send(jsonForApi('ok'))
+    res.send(jsonForApi({
+      title: 'docker-status-api API',
+      'docker-status-api': {
+        '/containers': 'Get active containers, their ports & whitelisted configuration'
+      }
+    }))
   })
   
+  // Get active containers, their ports & whitelisted configuration
   app.get('/containers', async (req, res) => {
     
+    // Fetch containers from docker
     let containers = await docker.listContainers()
     
+    // Inspec each container (in parallel)
     containers = await Promise.all(containers.map(container => {
       let full = docker.getContainer(container.Id)
       return full.inspect()
     }))
     
+    // Format each container
     containers = containers.map(container => ({
       id: container.Id,
       name: container.Name,
@@ -61,25 +75,23 @@ const util = require('./utils')
       image: container.Config.Image,
       state: container.State.Status,
       hostname: container.Config.hostname,
-      env: util.stripEnv(container.Config.Env),
+      env: util.stripEnv(container.Config.Env, envKeys),
       ports: util.processPorts(container.NetworkSettings.Ports)
     }))
     
+    // Return the containers
     res.send(jsonForApi(containers))
   })
   
+  // A 404 Endpoint
   app.use((req, res) => {
     res.status(404).send(jsonForApi('Not Found', false))
   })
   
   
   // Start the app
-  winston.info(`Started on ${process.env.APP_PORT || 3000}`)
-  try {
-    app.listen(process.env.APP_PORT || 3000)
-  }
-  catch (error) {
-    winston.error(error)
-  }
+  const port = process.env.APP_PORT || 3000
+  winston.info(`Started on ${port}`)
+  app.listen(port)
   
 })()
