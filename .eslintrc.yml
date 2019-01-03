@@ -1,0 +1,14 @@
+root: true
+
+parserOptions:
+  sourceType: 'module'
+  ecmaVersion: 2017
+
+env:
+  node: true
+  jest: true
+
+extends:
+  - standard
+  - prettier
+  - prettier/standard
