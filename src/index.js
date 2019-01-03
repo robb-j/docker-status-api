@@ -49,6 +49,8 @@ const envKeys = (process.env.ENV_KEYS && process.env.ENV_KEYS.split(",")) || [];
       containers.map(container => docker.getContainer(container.Id).inspect())
     );
 
+    console.log(containers);
+
     // Format each container
     containers = containers.map(container => ({
       id: container.Id,
@@ -58,7 +60,8 @@ const envKeys = (process.env.ENV_KEYS && process.env.ENV_KEYS.split(",")) || [];
       state: container.State.Status,
       hostname: container.Config.hostname,
       env: stripEnv(container.Config.Env, envKeys),
-      ports: processPorts(container.NetworkSettings.Ports)
+      ports: processPorts(container.NetworkSettings.Ports),
+      labels: container.Config.Labels
     }));
 
     // Return the containers
