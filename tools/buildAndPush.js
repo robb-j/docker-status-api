@@ -11,7 +11,7 @@
 
 // Imports
 const { readFileSync } = require("fs");
-const path = require("path");
+const { join } = require("path");
 const { exec } = require("child_process");
 
 const version = process.env.npm_package_version;
@@ -19,7 +19,7 @@ const version = process.env.npm_package_version;
 (async () => {
   try {
     // Get the registry to push to from the REGISTRY file
-    let registry = readFileSync(path.join(__dirname, "../REGISTRY")).trim();
+    let registry = readFileSync(join(__dirname, "../REGISTRY"), "utf8").trim();
 
     // Generate tags for the image
     let tags = [`${registry}:${version}`];
