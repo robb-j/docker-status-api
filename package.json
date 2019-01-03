@@ -32,10 +32,9 @@
   },
   "dependencies": {
     "api-formatter": "^1.0.0",
-    "dockerode": "^2.5.1",
+    "dockerode": "^2.5.7",
     "dotenv": "^6.2.0",
-    "express": "^4.16.1",
-    "winston": "^2.3.1"
+    "express": "^4.16.4"
   },
   "devDependencies": {
     "eslint": "^5.10.0",
