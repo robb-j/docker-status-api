@@ -55,6 +55,7 @@ const envKeys = (process.env.ENV_KEYS && process.env.ENV_KEYS.split(",")) || [];
     containers = containers.map(container => ({
       id: container.Id,
       name: formatContainerName(container.Name),
+      fullname: container.Name,
       started: new Date(container.State.StartedAt),
       image: container.Config.Image,
       state: container.State.Status,
