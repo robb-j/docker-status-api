@@ -31,23 +31,23 @@
     ]
   },
   "dependencies": {
-    "api-formatter": "^1.0.0",
+    "api-formatter": "^1.0.1",
     "dockerode": "^2.5.7",
-    "dotenv": "^6.2.0",
-    "express": "^4.16.4"
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
   },
   "devDependencies": {
-    "eslint": "^5.10.0",
-    "eslint-config-prettier": "^3.3.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^8.0.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "husky": "^1.2.0",
-    "jest": "^23.6.0",
-    "lint-staged": "^8.1.0",
-    "nodemon": "^1.18.7",
-    "prettier": "^1.15.3"
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "husky": "^4.2.3",
+    "jest": "^25.1.0",
+    "lint-staged": "^10.0.7",
+    "nodemon": "^2.0.2",
+    "prettier": "^1.19.1"
   }
 }
