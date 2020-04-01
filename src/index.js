@@ -49,8 +49,6 @@ const envKeys = (process.env.ENV_KEYS && process.env.ENV_KEYS.split(",")) || [];
       containers.map(container => docker.getContainer(container.Id).inspect())
     );
 
-    console.log(containers);
-
     // Format each container
     containers = containers.map(container => ({
       id: container.Id,
