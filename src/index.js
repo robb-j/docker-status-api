@@ -42,15 +42,17 @@ const envKeys = (process.env.ENV_KEYS && process.env.ENV_KEYS.split(",")) || [];
   // Get active containers, their ports & whitelisted configuration
   app.get("/containers", async (req, res) => {
     // Fetch containers from docker
-    let containers = await docker.listContainers();
+    const containerList = await docker.listContainers();
 
     // Inspect each container (in parallel)
-    containers = await Promise.all(
-      containers.map(container => docker.getContainer(container.Id).inspect())
+    const containers = await Promise.all(
+      containerList.map(container =>
+        docker.getContainer(container.Id).inspect()
+      )
     );
 
     // Format each container
-    containers = containers.map(container => ({
+    const output = containers.map(container => ({
       id: container.Id,
       name: formatContainerName(container.Name),
       fullname: container.Name,
@@ -64,7 +66,7 @@ const envKeys = (process.env.ENV_KEYS && process.env.ENV_KEYS.split(",")) || [];
     }));
 
     // Return the containers
-    res.api.sendData(containers);
+    res.api.sendData(output);
   });
 
   // A 404 Endpoint
